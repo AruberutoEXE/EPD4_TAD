@@ -182,6 +182,10 @@ MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     console.log("Serie actualizada");
   });
+  dbo.collection("series").deleteMany({seasons:{$lt:5}}, function(err, obj) {
+    if (err) throw err;
+    console.log("documento eliminado");
+  });
   dbo.collection("series").deleteMany({$and:[{rating:{$lt:8.5}},{genre:"Drama"}]}, function(err, obj) {
     if (err) throw err;
     console.log("documento eliminado");
@@ -335,6 +339,7 @@ db.series.updateMany({"title":"Black Mirror"},{$unset:"rating"})
 db.series.deleteMany({rating:{$lt:8.5}})
 db.series.updateMany({},{$pull:{genre:"Mystery"}})
 db.series.updateOne({"title":"Narcos"},{$unset:"synopsis"})
+db.series.deleteMany({seasons:{$lt:5}})
 db.series.deleteMany({$and:[{rating:{$lt:8.5}},{genre:"Drama"}]})
 db.series.deleteMany({$or:[{"title":"Black Mirror"},{"title":"The Crown"}]})
 db.series.deleteMany({$and:[{"genre":"Crime"},{"releaseYear":2015}]})
